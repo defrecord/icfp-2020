@@ -1,0 +1,459 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "ICFP Contest 2020 API",
+    "version": "v1"
+  },
+  "paths": {
+    "/aliens/{responseId}": {
+      "get": {
+        "tags": [
+          "AliensApi"
+        ],
+        "parameters": [
+          {
+            "name": "responseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/aliens/send": {
+      "post": {
+        "tags": [
+          "AliensApi"
+        ],
+        "requestBody": {
+          "content": {
+            "text/plain": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/logs": {
+      "get": {
+        "tags": [
+          "LogsApi"
+        ],
+        "parameters": [
+          {
+            "name": "logKey",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/scoreboard/lightning": {
+      "get": {
+        "tags": [
+          "ScoreboardApi"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/LightningScoreboardDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LightningScoreboardDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LightningScoreboardDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/submissions": {
+      "get": {
+        "tags": [
+          "SubmissionsApi"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubmissionDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubmissionDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubmissionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/submissions/{submissionId}": {
+      "get": {
+        "tags": [
+          "SubmissionsApi"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmissionDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/current": {
+      "get": {
+        "tags": [
+          "TeamsApi"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisteredTeamDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisteredTeamDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisteredTeamDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ProblemDescriptionDto": {
+        "type": "object",
+        "properties": {
+          "problemId": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TeamDto": {
+        "type": "object",
+        "properties": {
+          "teamId": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "teamName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "customData": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDto": {
+        "type": "object",
+        "properties": {
+          "score": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "solvedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TeamForProblemsScoreboardDto": {
+        "type": "object",
+        "properties": {
+          "team": {
+            "$ref": "#/components/schemas/TeamDto"
+          },
+          "score": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "solvedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "problems": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/ProblemDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LightningScoreboardDto": {
+        "type": "object",
+        "properties": {
+          "frozenAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "problems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProblemDescriptionDto"
+            },
+            "nullable": true
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeamForProblemsScoreboardDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SubmissionStatus": {
+        "enum": [
+          "Building",
+          "Testing",
+          "Failed_Build",
+          "Failed_Test",
+          "Failed_Unknown",
+          "Succeeded"
+        ],
+        "type": "string"
+      },
+      "SubmissionDto": {
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "platform": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "active": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "commitHash": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "commitMessage": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "branchName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "status": {
+            "$ref": "#/components/schemas/SubmissionStatus"
+          },
+          "buildLogKey": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "testLogKey": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BuildSystemRegistrationStatus": {
+        "enum": [
+          "Pending",
+          "Failed_GitRepository_InvalidUrl",
+          "Failed_GitRepository_AuthFailed",
+          "Failed_GitRepository_NoBranch",
+          "Failed_Unknown",
+          "Succeeded"
+        ],
+        "type": "string"
+      },
+      "BuildSystemRegistrationInfoDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/BuildSystemRegistrationStatus"
+          },
+          "errorMessage": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RegisteredTeamDto": {
+        "type": "object",
+        "properties": {
+          "teamId": {
+            "type": "string",
+            "format": "uuid",
+            "readOnly": true
+          },
+          "teamName": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "apiKey": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "deployKey": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "buildSystemRegistrationInfo": {
+            "$ref": "#/components/schemas/BuildSystemRegistrationInfoDto"
+          },
+          "gitRepositoryUrl": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "customData": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "ICFPC-ApiKey": {
+        "type": "apiKey",
+        "name": "apiKey",
+        "in": "query"
+      }
+    }
+  },
+  "security": [
+    {
+      "ICFPC-ApiKey": [ ]
+    }
+  ]
+}
