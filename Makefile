@@ -5,4 +5,4 @@ codegen:
 	swagger-codegen generate -i schema/swagger.json -l python
 
 run:
-	@sh run.sh $(API_URL) $(API_URL)
+	@python app/main.py $(API_URL) $(API_KEY)

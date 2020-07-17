@@ -1,13 +1,18 @@
+from __future__ import print_function
+from pprint import pprint
+from swagger_client.rest import ApiException
 import requests
 import sys
-
+import time
+import swagger_client
 
 def main():
-    server_url = sys.argv[1]
-    player_key = sys.argv[2]
-    print('ServerUrl: %s; PlayerKey: %s' % (server_url, player_key))
+    server_url = f"{sys.argv[1]}/aliens/send?apiKey={sys.argv[2]}"
+    data = "01"
+    print('ServerUrl: %s; Data: %s' % (server_url, data))
 
-    res = requests.post(server_url, data=player_key)
+    res = requests.post(server_url, data=data)
+    print(res)
     if res.status_code != 200:
         print('Unexpected server response:')
         print('HTTP code:', res.status_code)
