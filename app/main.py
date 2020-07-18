@@ -1,14 +1,33 @@
 from __future__ import print_function
 from pprint import pprint
 from swagger_client.rest import ApiException
+from pprint import pprint
 import requests
 import sys
 import time
 import swagger_client
 
 def main():
+    # Configure API key authorization: ICFPC-ApiKey
+    configuration = swagger_client.Configuration()
+    configuration.host = sys.argv[1]
+    configuration.api_key['apiKey'] = sys.argv[2]
+
+
+    # create an instance of the API class
+    api_instance = swagger_client.AliensApiApi(swagger_client.ApiClient(configuration))
+    body = '01' # str |  (optional)
+
+    # try:
+    #     res = api_instance.aliens_send_post(body=body)
+    #     pprint(res)
+    # except ApiException as e:
+    #     print("Exception when calling AliensApiApi->aliens_send_post: %s\n" % e)
+
+
     path = "aliens/send"
     server_url = f"{sys.argv[1]}/{path}?apiKey={sys.argv[2]}"
+    print(f"{sys.argv[1]} {sys.argv[2]} {sys.argv[3]} {sys.argv[4]}")
     data = "01"
 
     # requests
@@ -21,21 +40,6 @@ def main():
         print('Response body:', res.text)
         exit(2)
     print('Server response:', res.text)
-
-    # swagger
-    # Configure API key authorization: ICFPC-ApiKey
-    configuration = swagger_client.Configuration()
-    configuration.host = sys.argv[1]
-    configuration.api_key['apiKey'] = sys.argv[2]
-    api_instance = swagger_client.AliensApiApi(swagger_client.ApiClient(configuration))
-    body = data
-
-    try:
-        api_instance.aliens_send_post(body=body)
-    except ApiException as e:
-        print("Exception when calling AliensApiApi->aliens_send_post: %s\n" % e)
-
-
 
 
 if __name__ == '__main__':
