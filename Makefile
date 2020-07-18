@@ -6,3 +6,6 @@ codegen:
 
 run:
 	@python app/main.py $(API_URL) $(API_KEY)
+
+team:
+	@python app/teams_current.py $(API_URL) $(API_KEY)
