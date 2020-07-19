@@ -7,6 +7,7 @@ import sys
 import time
 import swagger_client
 
+# https://message-from-space.readthedocs.io/en/latest/game.html#join
 def main():
     # Configure API key authorization: ICFPC-ApiKey
     configuration = swagger_client.Configuration()

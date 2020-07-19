@@ -9,7 +9,11 @@ export API_URL=https://icfpc2020-api.testkontur.ru
 export API_KEY=abcdef0123456789
 ```
 
+## Run
 
+``` shell
+./run.sh $API_URL $API_KEY
+```
 
 # Data
 
