@@ -27,8 +27,8 @@ def main():
 
     path = "aliens/send"
     server_url = f"{sys.argv[1]}/{path}?apiKey={sys.argv[2]}"
-    print(f"{sys.argv[1]} {sys.argv[2]} {sys.argv[3]} {sys.argv[4]}")
-    data = "01"
+    print(f"{sys.argv[1]} {sys.argv[2]}")
+    data = "1101000"
 
     # requests
     print('ServerUrl: %s; Data: %s' % (server_url, data))
@@ -40,6 +40,8 @@ def main():
         print('Response body:', res.text)
         exit(2)
     print('Server response:', res.text)
+    # https://github.com/icfpcontest2020/aliens-proxy-protocol
+    print('Server expected:', '1101100001110111110111101010101011100')
 
 
 if __name__ == '__main__':
