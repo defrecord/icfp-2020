@@ -51,7 +51,7 @@ class Node(object):
     left_str = f' {self.left}' if self.left else ''
     right_str = f' {self.right}' if self.right else ''
     my_val = 'root' if self.value is None else self.value
-    return f'<{my_val}{left_str}{right_str}>'
+    return f'({my_val}{left_str}{right_str})'
 
 
 class Definition(object):
