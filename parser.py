@@ -106,7 +106,7 @@ def _get_tokens(args):
     return [' '.join(args.tokens)]
   file_name = args.file or 'parser_samples.txt'
   with open(file_name) as reader:
-    return [_.strip() for _ in reader]
+    return [_.strip() for _ in reader if not _.startswith('#')]
 
 
 def main():
@@ -118,7 +118,12 @@ def main():
   args = parser.parse_args()
 
   for line in _get_tokens(args):
-    item = parse(line)
+    try:
+        item = parse(line)
+    except ValueError as ex:
+        print(f'ERROR "{line}"')
+        print(ex)
+        continue
     item_type = 'Equation' if IsNode(item) else 'Definition'
     print(f'{item_type} => {item}')
 

@@ -1,3 +1,92 @@
 ap ap add 1 2
 ap ap add ap ap add 2 3 4
+ap inc 0   =   1
+ap inc 1   =   2
+ap dec 0   =  -1
+ap dec 1   =   0
+ap ap add 1 2   =   3
+ap ap add 0 x0   =   x0
+ap ap mul 4 2   =   8
+ap ap mul x0 x1   =   ap ap mul x1 x0
+ap ap div 4 3   =   1
+ap ap div 6 -2   =   -3
+ap ap div x0 1   =   x0
+ap ap eq x0 x0   =   t
+ap ap eq 0 -2   =   f
+ap ap eq 0 0   =   t
+ap ap lt 0 -1   =   f
+ap ap lt 0 0   =   f
+ap ap lt 0 1   =   t
+ap mod 1   =   [1]
+ap dem ap mod x0   =   x0
+ap mod ap dem x0   =   x0
+ap neg 0   =   0
+ap neg 1   =   -1
+ap neg -1   =   1
+ap inc ap inc 0   =   2
+ap dec ap ap add x0 1   =   x0
+ap ap add ap ap mul 2 3 4   =   10
+ap ap mul 2 ap ap add 3 4   =   14
+inc   =   ap add 1
+dec   =   ap add ap neg 1
+# s combinator
+ap ap ap s x0 x1 x2   =   ap ap x0 x2 ap x1 x2
+ap ap ap s add inc 1   =   3
+ap ap ap s mul ap add 1 6   =   42
+# c combinator
+ap ap ap c x0 x1 x2   =   ap ap x0 x2 x1
+ap ap ap c add 1 2   =   3
+# b combinator
+ap ap ap b x0 x1 x2   =   ap x0 ap x1 x2
+ap ap ap b inc dec x0   =   x0
+# True (K combinator)
+ap ap t x0 x1   =   x0
+ap ap t 1 5   =   1
+ap ap t t i   =   t
+ap ap t t ap inc 5   =   t
+ap ap t ap inc 5 t   =   6
+# False
+f
+ap ap f x0 x1   =   x1
+f   =   ap s t
+# power of two
 pwr2 = ap ap s ap ap c ap eq 0 1 ap ap b ap mul 2 ap ap b pwr2 ap add -1
+ap pwr2 3   =   8
+ap pwr2 4   =   16
+# I combinator
+ap i x0   =   x0
+ap i 1   =   1
+ap i i   =   i
+ap i add   =   add
+ap i ap add 1   =   ap add 1
+# cons
+ap ap ap cons x0 x1 x2   =   ap ap x2 x0 x1
+# car
+ap car ap ap cons x0 x1   =   x0
+ap car x2   =   ap x2 t
+# cdr
+ap cdr ap ap cons x0 x1   =   x1
+ap cdr x2   =   ap x2 f
+# isnil
+ap isnil nil   =   t
+ap isnil ap ap cons x0 x1   =   f
+# list construction
+( )   =   nil
+( x0 )   =   ap ap cons x0 nil
+( x0 , x1 )   =   ap ap cons x0 ap ap cons x1 nil
+( x0 , x1 , x2 )   =   ap ap cons x0 ap ap cons x1 ap ap cons x2 nil
+( x0 , x1 , x2 , x5 )   =   ap ap cons x0 ap ap cons x1 ap ap cons x2 ap ap cons x5 nil
+# vector
+vec   =   cons
+# picture (ap draw ( ap ap vec 1 1 )   =   |picture2|)
+# modulate list
+ap mod nil   =   [nil]
+ap mod ap ap cons nil nil   =   [ap ap cons nil nil]
+ap mod ap ap cons 0 nil   =   [ap ap cons 0 nil]
+ap mod ap ap cons 1 2   =   [ap ap cons 1 2]
+ap mod ap ap cons 1 ap ap cons 2 nil   =   [ap ap cons 1 ap ap cons 2 nil]
+ap mod ( 1 , 2 )   =   [( 1 , 2 )]
+ap mod ( 1 , ( 2 , 3 ) , 4 )   =   [( 1 , ( 2 , 3 ) , 4 )]
+# if
+ap ap ap if0 0 x0 x1   =   x0
+ap ap ap if0 1 x0 x1   =   x1
