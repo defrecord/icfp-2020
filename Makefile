@@ -1,6 +1,9 @@
 init:
 	brew install swagger-codegen
 
+swagger-schema:
+	wget -O schema/swagger.json https://icfpc2020-api.testkontur.ru/swagger/api/swagger.json
+
 codegen:
 	swagger-codegen generate -i schema/swagger.json -l python
 
