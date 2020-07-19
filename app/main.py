@@ -34,6 +34,10 @@ def main():
     print('ServerUrl: %s; Data: %s' % (server_url, data))
     res = requests.post(server_url, data=data)
     print(res)
+    # https://github.com/icfpcontest2020/aliens-proxy-protocol
+    if res.status_code == 302:
+        print('Response body:', res.text)
+
     if res.status_code != 200:
         print('Unexpected server response:')
         print('HTTP code:', res.status_code)
