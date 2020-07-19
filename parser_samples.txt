@@ -1,0 +1,3 @@
+ap ap add 1 2
+ap ap add ap ap add 2 3 4
+pwr2 = ap ap s ap ap c ap eq 0 1 ap ap b ap mul 2 ap ap b pwr2 ap add -1
