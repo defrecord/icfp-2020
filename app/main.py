@@ -7,6 +7,7 @@ import sys
 import time
 import swagger_client
 
+# https://message-from-space.readthedocs.io/en/latest/game.html#join
 def main():
     # Configure API key authorization: ICFPC-ApiKey
     configuration = swagger_client.Configuration()
@@ -27,19 +28,25 @@ def main():
 
     path = "aliens/send"
     server_url = f"{sys.argv[1]}/{path}?apiKey={sys.argv[2]}"
-    print(f"{sys.argv[1]} {sys.argv[2]} {sys.argv[3]} {sys.argv[4]}")
-    data = "01"
+    print(f"{sys.argv[1]} {sys.argv[2]}")
+    data = "1101000"
 
     # requests
     print('ServerUrl: %s; Data: %s' % (server_url, data))
     res = requests.post(server_url, data=data)
     print(res)
+    # https://github.com/icfpcontest2020/aliens-proxy-protocol
+    if res.status_code == 302:
+        print('Response body:', res.text)
+
     if res.status_code != 200:
         print('Unexpected server response:')
         print('HTTP code:', res.status_code)
         print('Response body:', res.text)
         exit(2)
     print('Server response:', res.text)
+    # https://github.com/icfpcontest2020/aliens-proxy-protocol
+    print('Server expected:', '1101100001110111110111101010101011100')
 
 
 if __name__ == '__main__':

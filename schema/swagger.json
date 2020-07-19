@@ -2,6 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "ICFP Contest 2020 API",
+    "description": "See <a href='https://github.com/icfpcontest2020/aliens-proxy-protocol' target='_blank'>https://github.com/icfpcontest2020/aliens-proxy-protocol<a/>",
     "version": "v1"
   },
   "paths": {
@@ -49,6 +50,185 @@
         }
       }
     },
+    "/games": {
+      "get": {
+        "tags": [
+          "GamesApi"
+        ],
+        "parameters": [
+          {
+            "name": "tournamentId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "take",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GamesListDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GamesListDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GamesListDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/games/non-rating": {
+      "get": {
+        "tags": [
+          "GamesApi"
+        ],
+        "parameters": [
+          {
+            "name": "take",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GamesListDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GamesListDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GamesListDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/games/{gameId}": {
+      "get": {
+        "tags": [
+          "GamesApi"
+        ],
+        "parameters": [
+          {
+            "name": "gameId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/games/non-rating/run": {
+      "post": {
+        "tags": [
+          "GamesApi"
+        ],
+        "parameters": [
+          {
+            "name": "attackerSubmissionId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "defenderSubmissionId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/logs": {
       "get": {
         "tags": [
@@ -67,6 +247,35 @@
         "responses": {
           "200": {
             "description": "Success"
+          }
+        }
+      }
+    },
+    "/scoreboard": {
+      "get": {
+        "tags": [
+          "ScoreboardApi"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TotalScoreboardDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TotalScoreboardDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TotalScoreboardDto"
+                }
+              }
+            }
           }
         }
       }
@@ -93,6 +302,46 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/LightningScoreboardDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/scoreboard/{tournamentId}": {
+      "get": {
+        "tags": [
+          "ScoreboardApi"
+        ],
+        "parameters": [
+          {
+            "name": "tournamentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TournamentScoreboardDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TournamentScoreboardDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TournamentScoreboardDto"
                 }
               }
             }
@@ -178,6 +427,78 @@
         }
       }
     },
+    "/submissions/other-teams": {
+      "get": {
+        "tags": [
+          "SubmissionsApi"
+        ],
+        "parameters": [
+          {
+            "name": "tournamentId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TeamSubmissionDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TeamSubmissionDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TeamSubmissionDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/submissions/{submissionId}/activate": {
+      "post": {
+        "tags": [
+          "SubmissionsApi"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/teams/current": {
       "get": {
         "tags": [
@@ -206,24 +527,146 @@
           }
         }
       }
+    },
+    "/teams/current/problems": {
+      "get": {
+        "tags": [
+          "TeamsApi"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeamForProblemsScoreboardDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeamForProblemsScoreboardDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeamForProblemsScoreboardDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tournaments": {
+      "get": {
+        "tags": [
+          "TournamentsApi"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TournamentDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TournamentDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TournamentDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tournaments/{tournamentId}": {
+      "get": {
+        "tags": [
+          "TournamentsApi"
+        ],
+        "parameters": [
+          {
+            "name": "tournamentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TournamentDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TournamentDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TournamentDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tournaments/current": {
+      "get": {
+        "tags": [
+          "TournamentsApi"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/TournamentDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TournamentDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TournamentDto"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
-      "ProblemDescriptionDto": {
-        "type": "object",
-        "properties": {
-          "problemId": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "TeamDto": {
         "type": "object",
         "properties": {
@@ -244,6 +687,273 @@
             },
             "nullable": true,
             "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlayerDto": {
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "team": {
+            "$ref": "#/components/schemas/TeamDto"
+          },
+          "debugLog": {
+            "type": "string",
+            "nullable": true
+          },
+          "playerKey": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "timeout": {
+            "type": "boolean",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GameWinner": {
+        "enum": [
+          "Nobody",
+          "Attacker",
+          "Defender"
+        ],
+        "type": "string"
+      },
+      "GameDto": {
+        "type": "object",
+        "properties": {
+          "gameId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tournamentId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "tournamentRoundId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "finishedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ticks": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "attacker": {
+            "$ref": "#/components/schemas/PlayerDto"
+          },
+          "defender": {
+            "$ref": "#/components/schemas/PlayerDto"
+          },
+          "winner": {
+            "$ref": "#/components/schemas/GameWinner"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GamesListDto": {
+        "type": "object",
+        "properties": {
+          "hasMore": {
+            "type": "boolean"
+          },
+          "next": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "games": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GameDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TournamentDtoType": {
+        "enum": [
+          "Lightning",
+          "Regular",
+          "Finals"
+        ],
+        "type": "string"
+      },
+      "TournamentDto": {
+        "type": "object",
+        "properties": {
+          "tournamentId": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "tournamentType": {
+            "$ref": "#/components/schemas/TournamentDtoType"
+          },
+          "acceptSubmissions": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "runGames": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "isTest": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          },
+          "finishedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          },
+          "frozenAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SubmissionForTournamentScoreboardDto": {
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "platform": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RatingDto": {
+        "type": "object",
+        "properties": {
+          "mu": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "sigma": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "conservativeRating": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TeamTournamentDto": {
+        "type": "object",
+        "properties": {
+          "submission": {
+            "$ref": "#/components/schemas/SubmissionForTournamentScoreboardDto"
+          },
+          "rating": {
+            "$ref": "#/components/schemas/RatingDto"
+          },
+          "isTest": {
+            "type": "boolean"
+          },
+          "score": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TeamForTotalScoreboardDto": {
+        "type": "object",
+        "properties": {
+          "team": {
+            "$ref": "#/components/schemas/TeamDto"
+          },
+          "score": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "tournaments": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TeamTournamentDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TotalScoreboardDto": {
+        "type": "object",
+        "properties": {
+          "frozenAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "tournaments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TournamentDto"
+            },
+            "nullable": true
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeamForTotalScoreboardDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDescriptionDto": {
+        "type": "object",
+        "properties": {
+          "problemId": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -311,6 +1021,46 @@
         },
         "additionalProperties": false
       },
+      "TeamForTournamentScoreboardDto": {
+        "type": "object",
+        "properties": {
+          "team": {
+            "$ref": "#/components/schemas/TeamDto"
+          },
+          "submission": {
+            "$ref": "#/components/schemas/SubmissionForTournamentScoreboardDto"
+          },
+          "rating": {
+            "$ref": "#/components/schemas/RatingDto"
+          },
+          "score": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TournamentScoreboardDto": {
+        "type": "object",
+        "properties": {
+          "tournament": {
+            "$ref": "#/components/schemas/TournamentDto"
+          },
+          "frozenAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "teams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeamForTournamentScoreboardDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "SubmissionStatus": {
         "enum": [
           "Building",
@@ -367,10 +1117,32 @@
             "nullable": true,
             "readOnly": true
           },
-          "testLogKey": {
+          "attackerTestLogKey": {
             "type": "string",
             "nullable": true,
             "readOnly": true
+          },
+          "defenderTestLogKey": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TeamSubmissionDto": {
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "platform": {
+            "type": "string",
+            "nullable": true
+          },
+          "team": {
+            "$ref": "#/components/schemas/TeamDto"
           }
         },
         "additionalProperties": false
