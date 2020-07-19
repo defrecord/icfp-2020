@@ -38,7 +38,7 @@ class Node(object):
       if self.right.ap:
         return self.right
       # go to the parent with the first free right
-      while n2.right:
+      while n2 and n2.parent and n2.right:
         n2 = n2.parent
       return n2
     else:
@@ -78,15 +78,22 @@ def IsDefinition(item: typing.Any) -> bool:
 # ap ap ap S x y z = ap ap X Z ap Y Z
 
 def parse(text: str) -> typing.Union[Node, Definition]:
-  root1 = Node(None)
-  cursor = root1
+  root1 = None
   root2 = None
+  cursor = None
+  make_root2 = False
 
   for token in text.split():
-    if token == '=':
-      # shows evaluation
-      root2 = Node(None)
+    if make_root2:
+      make_root2 = False
+      root2 = Node(token)
       cursor = root2
+    elif not root1:
+      root1 = Node(token)
+      cursor = root1
+    elif token == '=':
+      make_root2 = True
+      cursor = None
     else:
       cursor = cursor.add(token)
   return Definition(root1, root2) if root2 else root1
